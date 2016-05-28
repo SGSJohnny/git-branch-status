@@ -1,0 +1,26 @@
+#!/bin/bash
+
+
+SCRIPT='git-branch-status'
+LICENCE='LICENSE'
+SED_LINE1='#  You should have received a copy of the GNU General Public License version 3'
+SED_LINE2='#  along with git-branch-status.  If not, see <http:\/\/www.gnu.org\/licenses\/>.'
+SED_REPLACE='#  You will find the GNU General Public License version 3 at the end of this file.'
+
+
+git checkout monolithic
+git checkout master     $SCRIPT
+git checkout master     $LICENCE
+
+sed --in-place "s/$SED_LINE1/$SED_REPLACE/" $SCRIPT
+sed --in-place "s/$SED_LINE2//"             $SCRIPT
+
+echo                                                                                  >> $SCRIPT
+echo "##############################################################################" >> $SCRIPT
+echo "LICENSE=<<'GPL3'"                                                               >> $SCRIPT
+echo                                                                                  >> $SCRIPT
+cat LICENSE                                                                           >> $SCRIPT
+echo                                                                                  >> $SCRIPT
+echo "GPL3"                                                                           >> $SCRIPT
+
+git rm -f $LICENCE
